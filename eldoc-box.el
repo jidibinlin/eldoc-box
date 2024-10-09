@@ -433,20 +433,14 @@ WINDOW nil means use selected window."
          ;; calculate point coordinate relative to native frame
          ;; because childframe coordinate is relative to native frame
          (x (car point-pos))
-         (y (cdr point-pos))
-         (em (frame-char-height)))
+         (y (cdr point-pos)))
     (cons (if (< (- (frame-inner-width) width) x)
               ;; space on the right of the pos is not enough
               ;; put to left
               (max 0 (- x width))
             ;; normal, just return x
             x)
-          (if (< (- (frame-inner-height) height) y)
-              ;; space under the pos is not enough
-              ;; put above
-              (max 0 (- y height))
-            ;; normal, just return y + em
-            (+ y em)))))
+          (max 0 (- y height)))))
 
 (defun eldoc-box--default-at-point-position-function (width height)
   "Set `eldoc-box-position-function' to this function.
